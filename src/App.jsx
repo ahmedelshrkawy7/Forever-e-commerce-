@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -10,6 +10,11 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import { products } from "./assets/frontend_assets/assets";
 import Login from "./pages/login";
+import Test from "./pages/Test";
+import axios from "axios";
+import ProductItem from "./components/ProductItem";
+import Login2 from "./pages/Login2";
+import Login3 from "./pages/Login3";
 
 export const shop = createContext();
 
@@ -32,7 +37,7 @@ function App() {
               <Route path="/collection" element={<Collection />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login2 />} />
             </Routes>
           </div>
         </BrowserRouter>

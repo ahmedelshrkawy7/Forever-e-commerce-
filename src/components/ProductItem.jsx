@@ -7,11 +7,7 @@ const ProductItem = ({ id, name, price, image }) => {
   return (
     <div className="text-gray-700 cursor-pointer flex flex-col items-center ">
       <div>
-        <img
-          src={image[0]}
-          alt=""
-          className=" hover:scale-105 transition-all "
-        />
+        <img src={image} alt="" className=" hover:scale-105 transition-all " />
       </div>
       <div>
         <h1 className="pt-3 pb-1 text-sm ">{name}</h1>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import Title from "../components/Title";
 import { shop } from "../App";
 import ProductItem from "../components/ProductItem";
@@ -39,4 +39,4 @@ const LatestCollection = () => {
   );
 };
 
-export default LatestCollection;
+export default memo(LatestCollection);
