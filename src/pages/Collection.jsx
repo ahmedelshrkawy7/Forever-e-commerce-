@@ -8,10 +8,9 @@ const Collection = () => {
   const { products } = useContext(shop);
   const [show, setShow] = useState(true);
   const [filter, setFilter] = useState([]);
-  console.log("🚀 ~ Collection ~ filter:", filter);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
-  console.log("🚀 ~ Collection ~ subCategory:", subCategory);
+  const [sortType, setSortType] = useState("");
 
   // useEffect(() => {
   //   fetch("https://pm.alexondev.net/api/login", {
@@ -64,54 +63,27 @@ const Collection = () => {
     applyFiter();
   }, [category, subCategory]);
 
+  const sortProduct = () => {
+    let fpCopy = filter.slice();
+    switch (sortType) {
+      case "low-high":
+        setFilter(fpCopy.sort((a, b) => a.price - b.price));
+        break;
+      case "high-low":
+        setFilter(fpCopy.sort((a, b) => b.price - a.price));
+
+        break;
+      case "low":
+        break;
+    }
+  };
+
+  useEffect(() => {
+    sortProduct();
+  }, [sortType]);
+
   return (
     <div className="flex flex-col sm:flex-row gap-10">
-      {/* <div className="w-96">
-        <p className="">filters</p>
-        <div className="border-2 border-gray-300 p-4 my-5">
-          <p>Categories</p>
-          <div className="flex gap-10 mt-4">
-            <label htmlFor="" className="w-20">
-              Men
-            </label>
-            <input type="checkbox" name="" id="" />
-          </div>
-          <div className="flex gap-10">
-            <label htmlFor="" className="w-20">
-              Bottomwear
-            </label>
-            <input type="checkbox" name="" id="" />
-          </div>
-          <div className="flex gap-10">
-            <label htmlFor="" className="w-20">
-              kids
-            </label>
-            <input type="checkbox" name="" id="" />
-          </div>
-        </div>
-        <div className="border-2 border-gray-300 p-4 my-5">
-          <p>Categories</p>
-          <div className="flex gap-10 mt-4">
-            <label htmlFor="" className="w-20">
-              Men
-            </label>
-            <input type="checkbox" name="" id="" />
-          </div>
-          <div className="flex gap-10">
-            <label htmlFor="" className="w-20">
-              Women
-            </label>
-            <input type="checkbox" name="" id="" />
-          </div>
-          <div className="flex gap-10">
-            <label htmlFor="" className="w-20">
-              kids
-            </label>
-            <input type="checkbox" name="" id="" />
-          </div>
-        </div>
-      </div> */}
-
       <div className="min-w-60">
         <p className="my-2 text-xl flex items-center cursor-pointer gap-2">
           Filters
@@ -212,6 +184,7 @@ const Collection = () => {
             name=""
             id=""
             className="border-2 border-gray-300 text-sm px-2 h-10"
+            onChange={(e) => setSortType(e.target.value)}
           >
             <option value="relavent">Sort by :Relvant</option>
             <option value="low-high">Sort by :low to high</option>

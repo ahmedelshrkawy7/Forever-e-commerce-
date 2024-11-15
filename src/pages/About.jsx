@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductItem from "../components/ProductItem";
 import axios from "axios";
 import Loader from "../components/Loader";
+import Cookies from "js-cookie";
 
 const About = () => {
   const [data, setData] = useState([]);
@@ -12,11 +13,18 @@ const About = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://fakestoreapi.com/products")
+      .get("https://fakestoreapi.com/products", {
+        headers: {
+          // Authorization: `Bearer ${Cookies.get("hamada")}`,
+        },
+      })
       .then((res) => setData(res.data))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
+
+    // getData("/tasks");
   }, []);
+  // data
 
   return (
     <div>

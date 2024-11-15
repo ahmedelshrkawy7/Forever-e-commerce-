@@ -3,6 +3,8 @@ import Title from "../components/Title";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
+import { QueryClient, useMutation } from "react-query";
 
 const Login2 = () => {
   const schema = Yup.object().shape({
@@ -13,6 +15,28 @@ const Login2 = () => {
       .required("Required"),
   });
 
+  const postData = async (newData) => {
+    console.log("postData");
+
+    const { data } = await axios.post(
+      "https://pm.alexondev.net/api/login",
+      newData
+    );
+    return data;
+  };
+
+  const mutation = useMutation(postData, {
+    onSuccess: (r) => {
+      console.log("🚀 ~ Login2 ~ r:", r);
+      const queryclient = new QueryClient();
+      queryclient.invalidateQueries(["products", "hamada"]);
+
+      // Invalidate and refetch data
+      // queryClient.invalidateQueries('data');
+      console.log("first");
+    },
+  });
+  console.log("🚀 ~ Login2 ~ mutation:", mutation);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -20,16 +44,22 @@ const Login2 = () => {
     },
     validationSchema: schema,
     onSubmit: (v) => {
-      fetch("https://pm.alexondev.net/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: "ahmed@yahoo.com",
-          password: "12345678",
-        }),
-      });
+      // fetch("https://pm.alexondev.net/api/login", {
+      //   method: "post",
+      //   headers: {
+      //     "content-type": "application/json",
+      //     accept: "application/json",
+      //   },
+      //   body: JSON.stringify(v),
+      // })
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     console.log(res.data.user.token);
+      //     Cookies.set("hamada", res.data.user.token); // jwt
+      //   });
+      console.log("ffffffff");
+
+      mutation.mutate(v);
     },
   });
 
